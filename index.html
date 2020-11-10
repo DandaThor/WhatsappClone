@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+ 
+    <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-analytics.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/025c12b0bf.js" crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+</head>
+<body>
+
+
+
+    <div class="wrapper">
+      
+        <div class="title">
+          <div class="images">
+            <img src="https://picsum.photos/40">
+          </div>
+            
+            Simple Online Chat
+          
+          
+        </div>
+      
+        
+
+        <div class="form">
+
+            
+
+            <div class="bot-inbox inbox">
+                
+                <div id="har">
+                 
+                    
+
+                </div>
+
+            </div>
+
+            <div id="botm">
+                   
+            </div>
+
+        </div>
+        <div class="typing-field">
+            <div class="input-data">
+                <input id="text" type="text" placeholder="Type something here.." required>
+                <button id="myBtn" class="sendbtn" onclick="send()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+      var firebaseConfig = {
+          apiKey: "AIzaSyC9nAHRUhJcdt1UZwV7SyjV6ucQRuPV_TA",
+          authDomain: "whatsappclone-6ab50.firebaseapp.com",
+          databaseURL: "https://whatsappclone-6ab50.firebaseio.com",
+          projectId: "whatsappclone-6ab50",
+          storageBucket: "whatsappclone-6ab50.appspot.com",
+          messagingSenderId: "777768159796",
+          appId: "1:777768159796:web:6a9890d2a00a7d704b1861",
+          measurementId: "G-4C6CJMJVM5"
+      };
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+      const DB = firebase.database().ref("chats/");
+      var messages = [];
+      DB.on("value", (snapshot) => {
+          snapshot.forEach((child) => {
+              var message = child.val();
+
+              messages.push({
+                  text: message.text,
+
+
+              });
+
+             
+          })
+
+
+
+          var a = 0;
+          for (var i in messages) {
+              var h = document.createElement("H4");
+              var t = document.createTextNode(messages[a].text);
+              h.appendChild(t);
+              h.style.color = "black";
+              document.getElementById("har").appendChild(h);
+              a = a + 1;  
+              re() 
+          };
+          
+      });
+      
+      send = () => {
+          const text = document.getElementById("text").value;
+          document.getElementById("text").value = "";
+          firebase
+              .database()
+              .ref("chats/")
+              .push({
+                  text: text,
+              }).then(() => { location.reload() })
+
+
+
+              document.getElementById("har").innerHTML ="";
+
+              
+      }
+
+
+      
+    
+
+
+      var input = document.getElementById("text");
+          input.addEventListener("keyup", 
+      function(event) {
+          if (event.keyCode === 13) {
+              event.preventDefault();
+              document.getElementById("myBtn").click();
+          }
+      }); 
+
+      function re() {
+  var elmnt = document.getElementById("botm");
+  elmnt.scrollIntoView();
+}
+
+  </script>
+
+</body>
+</html>
